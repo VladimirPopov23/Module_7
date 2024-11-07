@@ -1,5 +1,5 @@
 # module_7_1.py
-# 06.11.2024 Задача "Учёт товаров"
+# 07.11.2024 в2. Задача "Учёт товаров"
 
 from pprint import pprint
 
@@ -16,7 +16,7 @@ class Product:
 
 class Shop:
     __file_name = 'products.txt'
-    file = open(__file_name, 'a')
+    file = open(__file_name, 'r')  # создаем новый файл
     file.close()
 
     def get_products(self):
@@ -26,17 +26,16 @@ class Shop:
         return products
 
     def add(self, *products):
-        file = open(self.__file_name, 'r')
-        list = file.read()
-        file.close()
+        products_if_file = self.get_products()
+        file = open(self.__file_name, 'a')
         for product in products:
-            if list.find(f'{product.name}') == -1:  # find возвращает индекс символа
-                # , с которого начинается искомая строка, -1 в случае неудачи
+            if products_if_file.find(f'{product.name}') == -1:  # find возвращает индекс символа, с которого начинается
+                                                                # искомая строка, в случае неудачи возвращает -1
                 file = open(self.__file_name, 'a')
                 file.write(f'{product}\n')
-                file.close()
             else:
                 print(f'Продукт {product} уже есть в магазине')
+        file.close()
 
 
 if __name__ == "__main__":
